@@ -137,9 +137,9 @@
 </li>
 </ul>
 <h2 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h2><p>首先我们要选取特征模型，要在导入数据是进 行处理，在训练任何模 型之前删除其中一些特 性，所以我想要检查每 个特性，并说明从输入数据中包含或省略它的理由。删除特征在新增特征然后要进行模型调节。现在我们已经引入了更多的复杂性，因为我们有了更多的功能，所以让我们继续创建一个随机森林，看看它是如何影响我们的损失分数 的。得到Brier损失分数以后就要删除一些没有价值的特征来简化模型。接着就应该观察特征的相关性（相关度高的会 增加模型的复杂性）。而想查看特征的相关性，就要画图，可以使用树形图。最后得到xxx，就删除xxx。</p>
-<p><img src="%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/1.png" alt="1"></p>
+<p><img src="/2021/03/03/%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/1.png" alt="1"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">X = features_le </span><br><span class="line">y = labels </span><br><span class="line">m = RandomForestClassifier(n_estimators=<span class="number">100</span>, n_jobs=-<span class="number">1</span>, random_state=<span class="number">42</span>) </span><br><span class="line">cv = StratifiedKFold(n_splits=<span class="number">5</span>, shuffle=<span class="literal">True</span>, random_state=<span class="number">42</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment"># Define a function to calculate the Brier loss using cross-validation </span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_loss</span>(<span class="params">X, y=y, m=m, cv=cv</span>):</span> </span><br><span class="line">    scores = cross_val_score(m, X, y, cv=cv, scoring=<span class="string">&#x27;brier_score_loss&#x27;</span>) <span class="keyword">return</span> np.mean(scores)*-<span class="number">1</span> loss = get_loss(X=X) print(<span class="string">&#x27;Brier loss:&#x27;</span>, <span class="string">&quot;&#123;0:.5f&#125;&quot;</span>.<span class="built_in">format</span>(loss))</span><br></pre></td></tr></table></figure>
-<p><img src="%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/2.png" alt="2"></p>
+<p><img src="/2021/03/03/%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/2.png" alt="2"></p>
 <h2 id="预测球队胜负"><a href="#预测球队胜负" class="headerlink" title="预测球队胜负"></a>预测球队胜负</h2><p>我们预测球队的胜负，要先清理我们的数据集。引入库，引入数据， 然后进行数据的探索之后我们还可以用特征工程；</p>
 <pre><code class="python"> X_all = data.drop([&#39;FTR&#39;],1) 
  y_all = data[&#39;FTR&#39;] 
@@ -150,13 +150,13 @@
      X_all[col] = scale(X_all[col]) 
 </code></pre>
 <p>加上训练和验证模型</p>
-<p><img src="%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/3.png" alt="3"></p>
-<p><img src="%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/4.png" alt="4"></p>
-<p><img src="%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/5.png" alt="5"></p>
+<p><img src="/2021/03/03/%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/3.png" alt="3"></p>
+<p><img src="/2021/03/03/%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/4.png" alt="4"></p>
+<p><img src="/2021/03/03/%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/5.png" alt="5"></p>
 <h2 id="预测球员身价"><a href="#预测球员身价" class="headerlink" title="预测球员身价"></a>预测球员身价</h2><p>我将进行一些基本的探索性数据分析，以便在准备建模数据（数据清理；训练/测试分割；缩放等）之前，对数据集中的特征有一个更高层次的了解，并评估不同的回归模型，以预测数据集中足球运动员的价值。 让我们先分析假设，•足球运动员的价值与他们的技 能、能力和元数据相关 ，球员价值不受短期状态/表现的影响（例如，最近 10 场比赛中 进球数或净胜球数等），球员价值观在不同联盟/国家之间是一致的/可转让的。一、每个球员的价值并不取决于他们目前所在的联赛。这些都是重要的概念。球员属性得分（如 传球、准确度、耐力、加速等）和附加信息（如年龄、位置、潜力等）从索菲法网站收集， 供 2019 赛季使用。这些信息被用来建立一个模型来预测每个玩家的价值。球员市场价值 的分布是非常积极的倾斜与大多数球员有相对较低的估值，但与少数特殊球员指挥一个重要的溢价。对这个变量进行 log 转换以规范化数据并创建建模的目标变量 log（value）。我们获取这些信息就可以在 pesmaster,或者 fifa 的网站爬取（如图所示）。</p>
-<p><img src="%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/6.png" alt="6"></p>
-<p><img src="%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/7.png" alt="7"></p>
-<p><img src="%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/8.png" alt="8"></p>
+<p><img src="/2021/03/03/%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/6.png" alt="6"></p>
+<p><img src="/2021/03/03/%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/7.png" alt="7"></p>
+<p><img src="/2021/03/03/%E8%B6%B3%E7%90%83%E6%8E%A2%E7%A9%B6-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%80%BB%E7%BB%93/8.png" alt="8"></p>
 <p>时间的原因，有 些东 西没 有提 到。探究作品我 还要继续加强， 提高自己！！！</p>
 
     
